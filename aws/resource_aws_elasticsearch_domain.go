@@ -194,9 +194,18 @@ func resourceAwsElasticSearchDomain() *schema.Resource {
 							Type:     schema.TypeBool,
 							Optional: true,
 						},
-						"zone_awareness_count": {
-							Type:     schema.TypeInt,
+						"zone_awareness_config": {
 							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"availability_zone_count": {
+										Type:         schema.TypeInt,
+										Required:     true,
+										ValidateFunc: validation.IntInSlice([]int{2, 3}),
+									},
+								},
+							},
 						},
 					},
 				},
